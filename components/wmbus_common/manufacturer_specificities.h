@@ -22,8 +22,6 @@
 #include"util.h"
 #include"wmbus.h"
 
-using namespace std;
-
 // Common: add default manufacturers key if none specified and we know one for the given frame
 void addDefaultManufacturerKeyIfAny(const vector<uchar> &frame, TPLSecurityMode tpl_sec_mode, MeterKeys *meter_keys);
 
