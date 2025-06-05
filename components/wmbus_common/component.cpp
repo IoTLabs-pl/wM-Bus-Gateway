@@ -25,6 +25,7 @@ namespace esphome
         void WMBusCommon::dump_config()
         {
             ESP_LOGCONFIG(TAG, "wM-Bus Component:");
+            ESP_LOGCONFIG(TAG, "  wmbusmeters version: %s", WMBUSMETERS_TAG);
             ESP_LOGCONFIG(TAG, "  Loaded drivers:");
             for (auto &driver : driver_names)
                 ESP_LOGCONFIG(TAG, ("    - " + driver).c_str());

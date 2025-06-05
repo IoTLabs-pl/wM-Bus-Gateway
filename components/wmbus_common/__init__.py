@@ -1,5 +1,6 @@
 import esphome.config_validation as cv
 from esphome.const import SOURCE_FILE_EXTENSIONS, CONF_ID
+from esphome.git import run_git_command
 from esphome.loader import get_component, ComponentManifest
 from esphome import codegen as cg
 from pathlib import Path
@@ -55,6 +56,23 @@ class WMBusComponentManifest(ComponentManifest):
 
 
 async def to_code(config):
+    wmbusmeters_tag = (
+        run_git_command(
+            [
+                "git",
+                "log",
+                "--oneline",
+                "--grep=^Merge wmbusmeters",
+                ".",
+            ],
+            Path(__file__).parent,
+        )
+        .splitlines()[0]
+        .split()[-1]
+    )
+
+    cg.add_define("WMBUSMETERS_TAG", wmbusmeters_tag)
+
     get_component("wmbus_common").__class__ = WMBusComponentManifest
 
     var = cg.new_Pvariable(config[CONF_ID])

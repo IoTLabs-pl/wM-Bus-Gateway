@@ -14,7 +14,6 @@ from esphome.components.mqtt import (
     MQTTPublishAction,
     mqtt_publish_action_to_code,
 )
-
 from ..wmbus_radio import RadioComponent
 from ..wmbus_common import validate_driver
 
@@ -52,9 +51,7 @@ CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(Meter),
         cv.GenerateID(CONF_RADIO_ID): cv.use_id(RadioComponent),
-        cv.Required(CONF_METER_ID): cv.All(
-            cv.hex_int, str, cv.Length(max=8), lambda x: x.zfill(8)
-        ),
+        cv.Required(CONF_METER_ID): cv.All(cv.int_, lambda x: str(x).zfill(8)),
         cv.Required(CONF_TYPE): validate_driver,
         cv.Optional(CONF_KEY): cv.Any(
             cv.All(cv.string_strict, lambda s: s.encode().hex(), hex_key_validator),
