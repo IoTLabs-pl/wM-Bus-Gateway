@@ -277,7 +277,11 @@ AFLAuthenticationType fromIntToAFLAuthenticationType(int i);
 const char *toString(AFLAuthenticationType aat);
 int toLen(AFLAuthenticationType aat);
 
-using namespace std;
+template <typename T>
+using function = std::function<T>;
+using string = std::string;
+template<typename T>
+using vector = std::vector<T>;
 
 struct MeterKeys
 {

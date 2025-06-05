@@ -78,8 +78,8 @@ bool isMeterDriverReasonableForMedia(string driver_name, int media);
 struct MeterInfo;
 bool isValidKey(const string& key, MeterInfo &mt);
 
-using namespace std;
-
+template <typename T>
+using shared_ptr = std::shared_ptr<T>;
 
 struct MeterInfo
 {
