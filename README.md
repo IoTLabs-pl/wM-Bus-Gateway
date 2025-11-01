@@ -3,9 +3,9 @@
 This repository contains the source code for the **wM-Bus Gateway**, a device that integrates Wireless M-Bus media meters with other systems.
 
 <p align="center">
-    <img src="https://iotlabs.pl/wp-content/uploads/2025/05/IMG_1327.jpg" alt="wM-Bus Gateway" width="30%" />
-    <img src="https://iotlabs.pl/wp-content/uploads/2025/05/IMG_1338.jpg" alt="wM-Bus Gateway" width="30%" />
-    <img src="https://iotlabs.pl/wp-content/uploads/2025/05/IMG_1337.jpg" alt="wM-Bus Gateway" width="30%" />
+    <img src="https://iotlabs.pl/wp-content/uploads/2025/05/P1010329.jpg" alt="wM-Bus Gateway" width="30%" />
+    <img src="https://iotlabs.pl/wp-content/uploads/2025/11/ad2small.jpg" alt="wM-Bus Gateway" width="30%" />
+    <img src="https://iotlabs.pl/wp-content/uploads/2025/05/4_total_energy2.jpg" alt="wM-Bus Gateway" width="30%" />
 </p>
 
 ---
@@ -39,13 +39,13 @@ This repository contains the source code for the **wM-Bus Gateway**, a device th
      2. Open [`http://192.168.4.1`](http://192.168.4.1) in your web browser
      3. Enter your Wi-Fi credentials and click **Save**.
    - **🔵 via Improv BLE:**
-     1. Open [Web Tools](https://iotlabs.pl/tools) with a device and browser supporting Bluetooth Low Energy (BLE), e.g. a mobile phone with Google Chrome or Edge.
+     1. Open [Web Tools](https://iotlabs.pl/en/tools) with a device and browser supporting Bluetooth Low Energy (BLE), e.g. a mobile phone with Google Chrome or Edge.
      2. Click **Connect** in the `Improv via BLE` section.
      3. Select your device from the list.
      4. Follow the instructions to connect the device to your Wi-Fi network.
    - **🟠 via Improv Serial:**
      1. Connect the device to your computer using a USB cable.
-     2. Open [Web Tools](https://iotlabs.pl/tools) with your computer and a browser supporting Web Serial API (e.g. Google Chrome or Edge).
+     2. Open [Web Tools](https://iotlabs.pl/en/tools) with your computer and a browser supporting Web Serial API (e.g. Google Chrome or Edge).
      3. Click **Connect** in the `Improv via Serial` section.
      4. Select your device from the list.
      5. Follow the instructions to connect the device to your Wi-Fi network.
@@ -185,11 +185,11 @@ For more complex LED patterns, you may use the [`script` component](https://esph
 You may use `wmbus-gateway-esp32.factory.bin` available in the **Releases** to flash the device with factory firmware.
 
 A simple web flasher based on [ESP Web Tools](https://esphome.github.io/esp-web-tools/) is available at:  
-👉 [https://iotlabs.pl/tools](https://iotlabs.pl/tools)
+👉 [https://iotlabs.pl/en/tools](https://iotlabs.pl/en/tools)
 
 ---
 
 ## 🌐 More Information
 
 More info about the device can be found at:  
-👉 [https://iotlabs.pl/wm-bus-gateway/](https://iotlabs.pl/wm-bus-gateway/)
+👉 [https://iotlabs.pl/en/wm-bus-gateway/](https://iotlabs.pl/en/wm-bus-gateway/)
