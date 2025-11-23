@@ -1,5 +1,5 @@
 packages:
-  wmbus_gateway: github://IoTLabs-pl/wM-Bus-Gateway/packages/wmbus_gateway.yaml@v1.0.4
+  wmbus_gateway: github://IoTLabs-pl/wM-Bus-Gateway/packages/wmbus_gateway.yaml@v1.0.5
 
 esphome:
   friendly_name: wM-Bus Gateway

@@ -52,7 +52,7 @@ def git(*args, dry_run=True):
     if dry_run:
         logger.info(f"Would run: git {' '.join(args)}")
         return ""
-    return run_git_command(["git", *args], cwd=PARENT_DIR)
+    return run_git_command(["git", *args], git_dir=PARENT_DIR)
 
 
 def checkout_master(dry_run=True):
