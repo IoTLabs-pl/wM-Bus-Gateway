@@ -43,9 +43,9 @@ namespace esphome
                     {
                         if (sensor->get_accuracy_decimals() > 0)
                             pos += 1 + sensor->get_accuracy_decimals();
-                        data = str_truncate(data, std::min(pos, 11 - sensor->get_unit_of_measurement().length()));
+                        data = str_truncate(data, std::min(pos, 11 - sensor->get_unit_of_measurement_ref().size()));
                     }
-                    data += sensor->get_unit_of_measurement();
+                    data += sensor->get_unit_of_measurement_ref();
                 }
                 it.print(it.get_width(),
                          it.get_height() / 2,
