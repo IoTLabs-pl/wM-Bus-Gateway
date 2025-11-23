@@ -54,7 +54,7 @@ if __name__ == "__main__":
     setup_logging(args)
 
     checkout_master(args.dry_run)
-    # ensure_clean_tree(args.dry_run)
+    ensure_clean_tree(args.dry_run)
 
     latest_tag = get_latest_tag()
 
