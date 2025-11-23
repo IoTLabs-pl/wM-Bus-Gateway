@@ -9,7 +9,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Build firmware
         id: build_firmware
         uses: esphome/build-action@v7
