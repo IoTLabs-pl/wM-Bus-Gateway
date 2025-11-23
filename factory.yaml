@@ -1,5 +1,5 @@
-packages: !include
-  file: packages/wmbus_gateway.yaml
+packages:
+  wmbus_gateway: !include packages/wmbus_gateway.yaml
 
 improv_serial:
 
