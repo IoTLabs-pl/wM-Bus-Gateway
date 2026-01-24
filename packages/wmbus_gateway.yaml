@@ -18,7 +18,9 @@ external_components:
   - source: 
       type: git
       url: https://github.com/IoTLabs-pl/wM-Bus-Gateway
-      ref: ${wmbus_gateway_version}
+      # TODO: Revert before merge to master branch
+      # ref: ${wmbus_gateway_version}
+      ref: esphome_2026_01
     components:
       - wmbus_gateway
 
