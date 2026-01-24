@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 from esphome.cpp_generator import AssignmentExpression
 import esphome.config_validation as cv
-from esphome.core import CORE, ID
+from esphome.core import CORE
 from esphome.components.binary_sensor import BinarySensor
 from esphome.components.ssd1306_base import SSD1306
 from esphome.components.image import Image_
