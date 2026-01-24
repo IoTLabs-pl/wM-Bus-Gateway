@@ -23,7 +23,7 @@ namespace esphome
         protected:
             void render_fcn(display::Display &it) override
             {
-                this->render_string(it, 0, 0, display::TextAlign::TOP_LEFT, font_small, this->sensor->get_name().c_str());
+                this->render_string(it, 0, 0, display::TextAlign::TOP_LEFT, resources::font_small, this->sensor->get_name().c_str());
                 this->render_value(it);
                 this->render_time_ago(it);
             }
@@ -49,7 +49,7 @@ namespace esphome
                 }
                 it.print(it.get_width(),
                          it.get_height() / 2,
-                         font_large,
+                         resources::font_large,
                          display::TextAlign::CENTER_RIGHT,
                          data.c_str());
             }
@@ -61,7 +61,7 @@ namespace esphome
 
                 it.print(it.get_width(),
                          it.get_height(),
-                         font_small,
+                         resources::font_small,
                          display::TextAlign::BOTTOM_RIGHT,
                          data.c_str());
             }

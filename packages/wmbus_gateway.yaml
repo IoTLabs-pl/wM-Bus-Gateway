@@ -46,3 +46,8 @@ wmbus_radio:
               - delay: 50ms
 
 wmbus_gateway:
+  resources:
+    font_large: font_large
+    font_small: font_small
+    qrcode: qrcode
+    logo: logo
