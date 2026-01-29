@@ -1,3 +1,3 @@
 substitutions:
   esphome_components_version: v1.0.6
-  wmbus_gateway_version: v1.0.7
+  wmbus_gateway_version: v1.0.8
