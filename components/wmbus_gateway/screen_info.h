@@ -21,13 +21,13 @@ namespace esphome
 
                 for (const auto &info : infos)
                 {
-                    it.print(0, y, font_small, info.first.c_str());
-                    font_small->measure((info.first + ' ').c_str(), &occupied, &dummy, &dummy, &dummy);
+                    it.print(0, y, resources::font_small, info.first.c_str());
+                    resources::font_small->measure((info.first + ' ').c_str(), &occupied, &dummy, &dummy, &dummy);
                     this->render_string(it,
                                         it.get_width(),
                                         y,
                                         display::TextAlign::TOP_RIGHT,
-                                        font_small,
+                                        resources::font_small,
                                         info.second.c_str(),
                                         it.get_width() - occupied);
                     y += it.get_height() / infos.size();

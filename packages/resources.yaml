@@ -14,7 +14,7 @@ font:
       - GF_Latin_Core
       
 image:
-  - id: qr_code
+  - id: qrcode
     file: https://github.com/IoTLabs-pl/wM-Bus-Gateway/blob/${wmbus_gateway_version}/resources/qrcode.png?raw=true
     type: binary
     invert_alpha: True

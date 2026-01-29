@@ -12,17 +12,17 @@ namespace esphome
         protected:
             void render_fcn(display::Display &it) override
             {
-                it.print(0, 0, font_small, "More");
-                it.print(0, font_small->get_height(), font_small, "info");
-                it.print(0, font_small->get_height() * 2, font_small, "at:");
+                it.print(0, 0, resources::font_small, "More");
+                it.print(0, resources::font_small->get_height(), resources::font_small, "info");
+                it.print(0, resources::font_small->get_height() * 2, resources::font_small, "at:");
 
                 const uint8_t scale = 3;
                 const uint8_t x_offset = 65;
                 const uint8_t y_offset = 1;
 
-                for (uint8_t x = 0; x < qr_code->get_width(); x++)
-                    for (uint8_t y = 0; y < qr_code->get_height(); y++)
-                        if (qr_code->get_pixel(x, y).is_on())
+                for (uint8_t x = 0; x < resources::qrcode->get_width(); x++)
+                    for (uint8_t y = 0; y < resources::qrcode->get_height(); y++)
+                        if (resources::qrcode->get_pixel(x, y).is_on())
                             it.filled_rectangle(x * scale + x_offset, y * scale + y_offset, scale, scale);
             }
         };
