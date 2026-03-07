@@ -6,19 +6,19 @@ font:
   # Font links to BDF files in the u8g2 library
   # version 2.36.5
   - id: font_large
-    file: https://github.com/olikraus/u8g2/blob/df86c4b95411ffdacfdd5ff938f8be14b4916603/tools/font/bdf/t0-22b-uni.bdf?raw=true
+    file: https://raw.githubusercontent.com/olikraus/u8g2/df86c4b95411ffdacfdd5ff938f8be14b4916603/tools/font/bdf/t0-22b-uni.bdf
     glyphs: "/ABCFGHJKMRVWabcdghklmoprsz°³ 1234567890.-"
   - id: font_small
-    file: https://github.com/olikraus/u8g2/blob/df86c4b95411ffdacfdd5ff938f8be14b4916603/tools/font/bdf/t0-16-uni.bdf?raw=true
+    file: https://raw.githubusercontent.com/olikraus/u8g2/df86c4b95411ffdacfdd5ff938f8be14b4916603/tools/font/bdf/t0-16-uni.bdf
     glyphsets:
       - GF_Latin_Core
       
 image:
   - id: qrcode
-    file: https://github.com/IoTLabs-pl/wM-Bus-Gateway/blob/${wmbus_gateway_version}/resources/qrcode.png?raw=true
+    file: https://raw.githubusercontent.com/IoTLabs-pl/wM-Bus-Gateway/refs/tags/${wmbus_gateway_version}/resources/qrcode.png?raw=true
     type: binary
     invert_alpha: True
   - id: logo
-    file: https://github.com/IoTLabs-pl/wM-Bus-Gateway/blob/${wmbus_gateway_version}/resources/logo.png?raw=true
+    file: https://raw.githubusercontent.com/IoTLabs-pl/wM-Bus-Gateway/refs/tags/${wmbus_gateway_version}/resources/logo.png?raw=true
     type: binary
     invert_alpha: True
