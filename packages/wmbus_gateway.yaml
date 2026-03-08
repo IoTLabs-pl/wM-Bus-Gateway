@@ -51,3 +51,9 @@ wmbus_gateway:
     font_small: font_small
     qrcode: qrcode
     logo: logo
+
+logger:
+  level: debug
+  baud_rate: 115200
+  logs:
+    light: INFO

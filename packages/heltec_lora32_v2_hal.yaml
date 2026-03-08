@@ -9,10 +9,6 @@ esp32:
   framework:
     type: esp-idf
 
-logger:
-  level: debug
-  baud_rate: 115200
-
 spi:
   clk_pin:
     number: GPIO5
