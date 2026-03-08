@@ -16,6 +16,8 @@ namespace esphome
             std::vector<std::pair<std::string, std::string>> collect_data() override
             {
                 std::string ssid = NO_DATA, ip = NO_DATA, rssi_ch = NO_DATA;
+                int8_t rssi = 0;
+                uint8_t channel = 0;
 
                 wifi_mode_t mode;
                 if (esp_wifi_get_mode(&mode) == ESP_OK)
@@ -29,7 +31,8 @@ namespace esphome
                             if (strlen(reinterpret_cast<const char *>(info.ssid)))
                                 ssid = reinterpret_cast<const char *>(info.ssid);
 
-                            rssi_ch = std::to_string(info.rssi) + "dBm CH" + std::to_string(info.primary);
+                            rssi = info.rssi;
+                            channel = info.primary;
                         }
                         break;
                     case WIFI_MODE_AP:
@@ -41,18 +44,27 @@ namespace esphome
 
                             wifi_sta_list_t sta_list;
                             if (esp_wifi_ap_get_sta_list(&sta_list) == ESP_OK && sta_list.num > 0)
-                                rssi_ch = std::to_string(sta_list.sta[0].rssi) + "dBm";
-                            rssi_ch += " CH" + to_string(config.ap.channel);
+                                rssi = sta_list.sta[0].rssi;
+                            channel = config.ap.channel;
                         }
 
                         break;
                     }
 
+                    if (rssi)
+                        rssi_ch = std::to_string(rssi) + "dBm";
+                    if (channel)
+                        rssi_ch += " CH" + std::to_string(channel);
+
                     auto *default_netif = esp_netif_get_default_netif();
                     esp_netif_ip_info_t ip_info;
 
                     if (default_netif && esp_netif_get_ip_info(default_netif, &ip_info) == ESP_OK)
-                        ip = network::IPAddress(&ip_info.ip).str();
+                    {
+                        char buf[network::IP_ADDRESS_BUFFER_SIZE];
+                        network::IPAddress(&ip_info.ip).str_to(buf);
+                        ip = buf;
+                    }
                 }
 
                 return {
