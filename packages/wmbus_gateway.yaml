@@ -1,6 +1,6 @@
 packages:
   hal: !include
-    file: heltec_lora32_v2_hal.yaml
+    file: lilygo_t3_s3_hal.yaml
   resources: !include
     file: resources.yaml
   version: !include
@@ -29,21 +29,6 @@ esphome:
   project:
     name: IoTLabs.wM-Bus Gateway
     version: ${wmbus_gateway_version}
-
-wmbus_radio:
-  radio_type: SX1276
-  cs_pin: GPIO18
-  reset_pin: GPIO14
-  irq_pin: GPIO35
-  on_frame:
-    - then:
-        - repeat:
-            count: 20
-            then:
-              - light.control:
-                  id: wmbus_gateway_status_led
-                  state: !lambda return iteration % 2 == 0;
-              - delay: 50ms
 
 wmbus_gateway:
   resources:

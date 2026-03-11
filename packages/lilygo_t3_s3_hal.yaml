@@ -1,0 +1,83 @@
+esphome:
+  platformio_options:
+    upload_speed: 921600
+
+esp32:
+  board: lilygo-t3-s3
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+
+psram:
+  mode: quad
+
+wifi:
+  ap:
+
+captive_portal:
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+
+  - platform: copy
+    source_id: wifi_signal_db
+    name: "WiFi Signal %"
+    filters:
+      - lambda: return {min(max(2 * (x + 100.0), 0.0), 100.0)};
+    unit_of_measurement: "%"
+    entity_category: "diagnostic"
+
+spi:
+  clk_pin:
+    number: GPIO5
+  mosi_pin: GPIO6
+  miso_pin:
+    number: GPIO3
+    ignore_strapping_warning: true
+
+wmbus_radio:
+  radio_type: SX1276
+  cs_pin: GPIO7
+  reset_pin: GPIO9
+  irq_pin: GPIO33
+  on_frame:
+    - then:
+        - repeat:
+            count: 20
+            then:
+              - light.control:
+                  id: wmbus_gateway_status_led
+                  state: !lambda return iteration % 2 == 0;
+              - delay: 50ms
+              
+i2c:
+  frequency: 800kHz
+  scan: False
+  sda: GPIO18
+  scl: GPIO17
+
+display:
+  - platform: ssd1306_i2c
+    model: SSD1306 128x64
+    address: 0x3C
+    auto_clear_enabled: True
+    contrast: 50%
+    update_interval: never
+
+light:
+  - platform: status_led
+    id: wmbus_gateway_status_led
+    pin: GPIO37
+
+binary_sensor:
+  - platform: gpio
+    id: ext_button
+    pin:
+      number: GPIO0
+      ignore_strapping_warning: true
+      mode: input
+      inverted: True
