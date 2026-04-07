@@ -6,6 +6,7 @@ namespace esphome
     {
 
         const static char *TAG = "DisplayManager";
+        const static char *DISPLAY_TIMEOUT_TAG = "display_off";
 
         DisplayManager::DisplayManager(ssd1306_base::SSD1306 *display, binary_sensor::BinarySensor *button)
             : display(display), button(button)
@@ -32,7 +33,7 @@ namespace esphome
             this->current_screen->reinit();
             this->update();
             this->start_poller();
-            this->set_timeout("display_off",
+            this->set_timeout(DISPLAY_TIMEOUT_TAG,
                               this->display_timeout,
                               [this]()
                               { this->display->turn_off();
@@ -53,7 +54,7 @@ namespace esphome
             ss.render(*this->display);
             this->display->display();
 
-            this->set_timeout("display_off",
+            this->set_timeout(DISPLAY_TIMEOUT_TAG,
                               10'000,
                               [this]()
                               { this->draw_next(); });
