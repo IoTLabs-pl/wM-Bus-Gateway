@@ -1,6 +1,12 @@
 esphome:
   platformio_options:
     upload_speed: 921600
+  on_boot: 
+    priority: 790
+    then:
+      - output.set_level: 
+          id: vext_output
+          level: 0.33
 
 esp32:
   board: heltec_wifi_lora_32_V2
@@ -30,13 +36,13 @@ display:
     address: 0x3C
     auto_clear_enabled: True
     contrast: 50%
-    reset_pin:
-      number: GPIO16
+    reset_pin: GPIO16
     update_interval: never
 
 output:
-  - platform: gpio
+  - platform: ledc
     id: vext_output
+    frequency: 10kHz
     pin: GPIO21
     inverted: True
 
