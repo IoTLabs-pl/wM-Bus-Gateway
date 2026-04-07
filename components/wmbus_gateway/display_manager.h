@@ -31,6 +31,7 @@ namespace esphome
             void update() override;
             float get_setup_priority() const override;
             uint32_t get_update_interval() const override;
+            void set_display_timeout(uint32_t timeout);
 
 #ifdef USE_WMBUS_METER_SENSOR
         public:
@@ -44,9 +45,10 @@ namespace esphome
 
             ssd1306_base::SSD1306 *display;
             binary_sensor::BinarySensor *button;
+            
+            uint32_t display_timeout;
 
             void change_page();
-
             void draw_next();
         };
     }

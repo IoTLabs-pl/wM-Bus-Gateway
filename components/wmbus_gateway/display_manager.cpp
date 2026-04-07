@@ -32,7 +32,9 @@ namespace esphome
             this->current_screen->reinit();
             this->update();
             this->start_poller();
-            this->set_timeout("display_off", 30000, [this]()
+            this->set_timeout("display_off",
+                              this->display_timeout,
+                              [this]()
                               { this->display->turn_off();
                                 this->stop_poller(); });
         }
@@ -51,7 +53,9 @@ namespace esphome
             ss.render(*this->display);
             this->display->display();
 
-            this->set_timeout("display_off", 10000, [this]()
+            this->set_timeout("display_off",
+                              10'000,
+                              [this]()
                               { this->draw_next(); });
         }
 
@@ -100,6 +104,11 @@ namespace esphome
             auto current = this->current_screen ? this->current_screen : this->last_screen;
 
             this->current_screen = current->next;
+        }
+
+        void DisplayManager::set_display_timeout(uint32_t timeout)
+        {
+            this->display_timeout = timeout;
         }
     }
 }

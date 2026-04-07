@@ -7,7 +7,7 @@ from esphome.components.ssd1306_base import SSD1306
 from esphome.components.image import Image_
 from esphome.components.font import Font
 from esphome.components.wmbus_meter.base_sensor import BaseSensor
-from esphome.const import CONF_DISPLAY_ID, CONF_ID, CONF_PAGES
+from esphome.const import CONF_DISPLAY_ID, CONF_ID, CONF_PAGES, CONF_TIMEOUT
 
 gui_ns = cg.esphome_ns.namespace("wmbus_gateway")
 resources_ns = gui_ns.namespace("resources")
@@ -42,6 +42,7 @@ CONFIG_SCHEMA = cv.Schema(
             "all",
             [cv.use_id(BaseSensor)],
         ),
+        cv.Optional(CONF_TIMEOUT, default="30s"): cv.positive_time_period_seconds,
     }
 )
 
@@ -75,5 +76,7 @@ async def to_code(config):
 
     for sensor in sensors:
         cg.add(manager.add_sensor(await cg.get_variable(sensor)))
+
+    cg.add(manager.set_display_timeout(config[CONF_TIMEOUT].total_milliseconds))
 
     await cg.register_component(manager, config)
