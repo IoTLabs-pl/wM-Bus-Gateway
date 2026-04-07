@@ -12,8 +12,8 @@ wifi:
 api:
 
 # If you want to use OTA updates, you need to enable OTA.
-# ota:
-#   - platform: esphome
+ota:
+  - platform: esphome
 
 # If you want to use MQTT, you need to enable MQTT.
 # mqtt:
