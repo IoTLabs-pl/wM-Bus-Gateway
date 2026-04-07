@@ -86,8 +86,11 @@ sensor:
 
 wmbus_gateway:
   # If you want to set specific pages on the display, you may use the following config.
-  # By default, all defined sensor are displayed.
   # pages:
   #   - total_water_sensor
   #   - water_meter_rssi
+  # By default, all defined sensor are displayed and it may be explicitly specified as
+  # pages: all
+  # Additionally, you may change the timeout after which the display will be turned off.
+  # timeout: 30s # by default, the display is turned on for 30 seconds
 
