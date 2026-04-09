@@ -6,7 +6,7 @@ esphome:
     then:
       - output.set_level: 
           id: vext_output
-          level: 0.25
+          level: 0.2
 
 esp32:
   board: heltec_wifi_lora_32_V2
