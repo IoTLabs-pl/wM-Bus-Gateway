@@ -1,5 +1,8 @@
 # wM-Bus Gateway
 
+![ESPHome](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FIoTLabs-pl%2FwM-Bus-Gateway%2Frefs%2Fheads%2Fmaster%2F.github%2Fworkflows%2Fbuild.yaml&query=%24.jobs.build.steps...with.version&label=ESPHome&style=for-the-badge&color=f3922d&labelColor=2b4c5a)
+![GitHub License](https://img.shields.io/github/license/IoTLabs-pl/wM-Bus-Gateway?style=for-the-badge&color=f3922d&labelColor=2b4c5a)
+
 This repository contains the source code for the **wM-Bus Gateway**, a device that integrates Wireless M-Bus media meters with other systems.
 
 <p align="center">
