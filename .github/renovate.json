@@ -10,6 +10,16 @@
       ],
       "packageNameTemplate": "IoTLabs-pl/ESPHome-Components",
       "datasourceTemplate": "github-releases"
+    },
+    {
+      "managerFilePatterns": [".github/workflows/build.yaml"],
+      "fileFormat": "yaml",
+      "customType": "jsonata",
+      "matchStrings": [
+        "jobs.build.steps[id=\"build_firmware\"].{\"currentValue\":with.version}"
+      ],
+      "packageNameTemplate": "esphome/esphome",
+      "datasourceTemplate": "github-releases"
     }
   ]
 }

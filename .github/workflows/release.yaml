@@ -1,0 +1,28 @@
+name: Build release firmware
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        id: download-artifacts
+        with:
+          name: firmware-build
+      - name: Upload binaries to release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            ${{ steps.download-artifacts.outputs.download-path }}/*.factory.bin
+            ${{ steps.download-artifacts.outputs.download-path }}/manifest.json
