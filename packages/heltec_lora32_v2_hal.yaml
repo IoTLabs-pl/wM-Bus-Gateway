@@ -14,6 +14,8 @@ esp32:
   cpu_frequency: 240MHz
   framework:
     type: esp-idf
+    advanced: 
+      sram1_as_iram: true
 
 spi:
   clk_pin:

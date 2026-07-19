@@ -49,6 +49,8 @@ namespace esphome
                         }
 
                         break;
+                    default:
+                        break;
                     }
 
                     if (rssi)
