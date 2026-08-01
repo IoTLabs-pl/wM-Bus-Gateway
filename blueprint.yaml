@@ -61,7 +61,7 @@ wmbus_meter:
     #           headers:
     #             Content-Type: application/json
     #           body: !lambda |-
-    #             return meter.as_json();
+    #             return meter->as_json();
 
 sensor:
   # This part of config is responsible for extracting specific fields
