@@ -29,7 +29,6 @@ output:
   - platform: gpio
     id: vext_output
     pin: GPIO36
-    inverted: true
 
 light:
   - platform: status_led

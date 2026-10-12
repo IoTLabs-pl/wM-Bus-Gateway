@@ -54,6 +54,7 @@ wmbus_gateway:
 logger:
   level: debug
   baud_rate: 115200
+  hardware_uart: UART0
   logs:
     light: INFO
     status_led: INFO
