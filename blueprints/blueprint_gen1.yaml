@@ -1,0 +1,96 @@
+packages:
+  wmbus_gateway: github://IoTLabs-pl/wM-Bus-Gateway/packages/wmbus_gateway_gen1.yaml@v1.1.7
+
+esphome:
+  friendly_name: wM-Bus Gateway Gen1
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# If you want to connect with HA, you need to enable API.
+api:
+
+# If you want to use OTA updates, you need to enable OTA.
+ota:
+  - platform: esphome
+
+# If you want to use MQTT, you need to enable MQTT.
+# mqtt:
+#   broker: mqtt.example.com
+#   username: !secret mqtt_username
+#   password: !secret mqtt_password
+
+wmbus_radio:
+  # This part of config is responsible for listening to any wM-Bus frames.
+  # The same part of config is present in the factory firmware. 
+  # Using links appear in the logs, you will be redirected to the wM-Bus Meters Analyzer
+  # allowing you inspect the received frames, identify proper driver, 
+  # check your decryption key and identify available fields in datagrams.
+  # You may comment out this section if your meters are already configured
+  # and you don't want to see the frames in the logs.
+  on_frame:
+    - then:
+        - logger.log:
+            level: WARN
+            format: "Meter ID: %s"
+            args: ["frame->meter_id().c_str()"]
+        - logger.log:
+            level: WARN
+            format: "Frame: https://wmbusmeters.org/analyze/%s"
+            args: ["frame->as_hex().c_str()"]
+
+wmbus_meter:
+  # This part of config is responsible for handling the received frames
+  # for the specified meter. You may send whole decoded datagram everywhere
+  # You may specify multiple meters.
+  - id: my_meter
+    meter_id: 12345678
+    type: apator162
+    key: 00112233445566778899aabbccddeeff # Optional, if your meter is encrypted. May be specified as ASCII or HEX string.
+    # mode: C1 # or T1 if you want to filter specific modes. When not specified, all modes are accepted.
+    # on_telegram:
+    # Sending telegram to MQTT topic as JSON. MQTT component must be configured in your config.
+    #   - then: 
+    #       - wmbus_meter.send_telegram_with_mqtt:
+    #           topic: some_topic
+    # Sending telegram to HTTP endpoint as JSON.
+    #   - then:
+    #       - http_request.post:
+    #           url: http://example.com/api
+    #           headers:
+    #             Content-Type: application/json
+    #           body: !lambda |-
+    #             return meter->as_json();
+
+sensor:
+  # This part of config is responsible for extracting specific fields
+  # from the meter data and making them available as sensors.
+  # By default, unit of measurement is determined from the field.
+  # You may specify unit of measurement to override it.
+  # All parameters from https://esphome.io/components/sensor/index.html are supported.
+  - platform: wmbus_meter
+    id: total_water_sensor
+    field: total_m3
+    parent_id: my_meter
+    name: Water Consumption
+    state_class: total_increasing
+    device_class: water
+  - platform: wmbus_meter
+    id: water_meter_rssi
+    field: rssi_dbm
+    parent_id: my_meter
+    name: RSSI
+    device_class: signal_strength
+    state_class: measurement
+
+wmbus_gateway:
+  # If you want to set specific pages on the display, you may use the following config.
+  # pages:
+  #   - total_water_sensor
+  #   - water_meter_rssi
+  # By default, all defined sensor are displayed and it may be explicitly specified as
+  # pages: all
+  # Additionally, you may change the timeout after which the display will be turned off.
+  # timeout: 30s # by default, the display is turned on for 30 seconds
+

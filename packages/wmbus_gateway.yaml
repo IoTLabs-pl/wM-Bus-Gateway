@@ -1,10 +1,10 @@
+substitutions:
+  hw_variant: Gen1
+
 packages:
-  hal: !include
-    file: heltec_lora32_v2_hal.yaml
-  resources: !include
-    file: resources.yaml
-  version: !include
-    file: version.yaml
+  hal: !include hal_${hw_variant | lower}.yaml
+  resources: !include resources.yaml
+  version: !include version.yaml
 
 external_components:
   - source: 
@@ -24,17 +24,16 @@ external_components:
 
 esphome:
   name: wmbus-gateway
-  friendly_name: wM-Bus Gateway
+  friendly_name: wM-Bus Gateway ${hw_variant}
   comment: wM-Bus Gateway for ESPHome
   project:
-    name: IoTLabs.wM-Bus Gateway
-    version: ${wmbus_gateway_version}
+    name: IoTLabs.wM-Bus Gateway ${hw_variant}
+    version: ${project_version}
+  platformio_options:
+    upload_speed: 921600
 
 wmbus_radio:
-  radio_type: SX1276
-  cs_pin: GPIO18
-  reset_pin: GPIO14
-  irq_pin: GPIO35
+  id: wmbus_radio_component
   on_frame:
     - then:
         - repeat:
@@ -57,3 +56,4 @@ logger:
   baud_rate: 115200
   logs:
     light: INFO
+    status_led: INFO

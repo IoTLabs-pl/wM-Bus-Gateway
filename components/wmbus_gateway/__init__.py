@@ -1,13 +1,13 @@
 import esphome.codegen as cg
-from esphome.cpp_generator import AssignmentExpression
 import esphome.config_validation as cv
-from esphome.core import CORE
 from esphome.components.binary_sensor import BinarySensor
-from esphome.components.ssd1306_base import SSD1306
-from esphome.components.image import Image_
 from esphome.components.font import Font
+from esphome.components.image import Image_
+from esphome.components.ssd1306_base import SSD1306
 from esphome.components.wmbus_meter.base_sensor import BaseSensor
 from esphome.const import CONF_DISPLAY_ID, CONF_ID, CONF_PAGES, CONF_TIMEOUT
+from esphome.core import CORE
+from esphome.cpp_generator import AssignmentExpression
 
 gui_ns = cg.esphome_ns.namespace("wmbus_gateway")
 resources_ns = gui_ns.namespace("resources")

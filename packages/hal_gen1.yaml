@@ -1,6 +1,4 @@
 esphome:
-  platformio_options:
-    upload_speed: 921600
   on_boot: 
     priority: 790
     then:
@@ -9,7 +7,7 @@ esphome:
           level: 0.2
 
 esp32:
-  board: heltec_wifi_lora_32_V2
+  variant: esp32
   flash_size: 8MB
   cpu_frequency: 240MHz
   framework:
@@ -61,3 +59,11 @@ binary_sensor:
       ignore_strapping_warning: true
       mode: input
       inverted: True
+
+wmbus_radio:
+  id: wmbus_radio_component
+  radio_type: SX1276
+  cs_pin: GPIO18
+  reset_pin: GPIO14
+  dio1_pin: GPIO35
+

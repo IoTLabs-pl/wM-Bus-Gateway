@@ -1,5 +1,8 @@
 packages:
-  wmbus_gateway: !include packages/wmbus_gateway.yaml
+  wmbus_gateway: !include packages/wmbus_gateway_${hw_variant | lower}.yaml
+
+esphome:
+  name: wmbus-gateway-${hw_variant | lower}
 
 improv_serial:
 
@@ -19,7 +22,7 @@ api:
 captive_portal:
 
 dashboard_import:
-  package_import_url: github://IoTLabs-pl/wM-Bus-Gateway/blueprint.yaml@latest
+  package_import_url: github://IoTLabs-pl/wM-Bus-Gateway/blueprints/blueprint_${hw_variant | lower}.yaml@latest
   import_full_config: true
 
 web_server:
