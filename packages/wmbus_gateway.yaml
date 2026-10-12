@@ -28,7 +28,7 @@ esphome:
   comment: wM-Bus Gateway for ESPHome
   project:
     name: IoTLabs.wM-Bus Gateway ${hw_variant}
-    version: ${project_version}
+    version: ${wmbus_gateway_version}
   platformio_options:
     upload_speed: 921600
 
