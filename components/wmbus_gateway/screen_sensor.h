@@ -37,14 +37,21 @@ namespace esphome
                 std::string data = NO_DATA;
                 if (!std::isnan(sensor->get_state()))
                 {
-                    data = std::to_string(sensor->get_state());
-                    size_t pos = data.find('.');
-                    if (pos != std::string::npos)
-                    {
-                        if (sensor->get_accuracy_decimals() > 0)
-                            pos += 1 + sensor->get_accuracy_decimals();
-                        data = str_truncate(data, std::min(pos, 11 - sensor->get_unit_of_measurement_ref().size()));
-                    }
+                    data = value_accuracy_to_string(sensor->get_state(), sensor->get_accuracy_decimals());
+                    if (data.find('.') != std::string::npos)
+                        while (!data.empty())
+                        {
+                            switch (data.back())
+                            {
+                            case '0':
+                                data.pop_back();
+                                continue;
+                            case '.':
+                                data.pop_back();
+                                break;
+                            }
+                            break;
+                        }
                     data += sensor->get_unit_of_measurement_ref();
                 }
                 it.print(it.get_width(),
