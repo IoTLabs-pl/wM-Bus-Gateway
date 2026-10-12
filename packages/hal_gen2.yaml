@@ -1,0 +1,57 @@
+esp32:
+  variant: esp32s3
+  flash_size: 8MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+
+spi:
+  clk_pin: GPIO9
+  mosi_pin: GPIO10
+  miso_pin: GPIO11
+
+i2c:
+  frequency: 800kHz
+  scan: false
+  sda: GPIO17
+  scl: GPIO18
+
+display:
+  - platform: ssd1306_i2c
+    model: SSD1306 128x64
+    address: 0x3C
+    auto_clear_enabled: true
+    contrast: 50%
+    reset_pin: GPIO21
+    update_interval: never
+
+output:
+  - platform: gpio
+    id: vext_output
+    pin: GPIO36
+    inverted: true
+
+light:
+  - platform: status_led
+    id: wmbus_gateway_status_led
+    pin: GPIO35
+
+binary_sensor:
+  - platform: gpio
+    id: ext_button
+    pin:
+      number: GPIO0
+      ignore_strapping_warning: true
+      mode: input
+      inverted: true
+
+wmbus_radio:
+  id: wmbus_radio_component
+  radio_type: SX1262
+  cs_pin: GPIO8
+  reset_pin: GPIO12
+  busy_pin: GPIO13
+  dio1_pin: GPIO14
+  tcxo_voltage: 1.8V
+  use_dcdc: true
+  rx_boost: true

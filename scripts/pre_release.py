@@ -72,7 +72,8 @@ if __name__ == "__main__":
             PARENT_DIR
             / "packages"
             / "version.yaml": "wmbus_gateway_version: {version}",
-            PARENT_DIR / "blueprint.yaml": "wmbus_gateway.yaml@{version}",
+            PARENT_DIR / "blueprints" / "blueprint_gen1.yaml": "wmbus_gateway_gen1.yaml@{version}",
+            PARENT_DIR / "blueprints" / "blueprint_gen2.yaml": "wmbus_gateway_gen2.yaml@{version}",
         },
         dry_run=args.dry_run,
     )

@@ -15,14 +15,13 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download artifacts
+      - name: Download all artifacts
         uses: actions/download-artifact@v8
-        id: download-artifacts
         with:
-          name: firmware-build
+          path: release-artifacts
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v3
         with:
           files: |
-            ${{ steps.download-artifacts.outputs.download-path }}/*.factory.bin
-            ${{ steps.download-artifacts.outputs.download-path }}/manifest.json
+            release-artifacts/**/*.factory.bin
+            release-artifacts/**/*.manifest.json
