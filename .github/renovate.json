@@ -12,7 +12,10 @@
       "datasourceTemplate": "github-releases"
     },
     {
-      "managerFilePatterns": [".github/workflows/build.yaml"],
+      "managerFilePatterns": [
+        ".github/workflows/release.yaml",
+        ".github/workflows/test.yaml"
+      ],
       "fileFormat": "yaml",
       "customType": "jsonata",
       "matchStrings": [
