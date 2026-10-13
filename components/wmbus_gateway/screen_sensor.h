@@ -37,7 +37,9 @@ namespace esphome
                 std::string data = NO_DATA;
                 if (!std::isnan(sensor->get_state()))
                 {
-                    data = value_accuracy_to_string(sensor->get_state(), sensor->get_accuracy_decimals());
+                    char buf[VALUE_ACCURACY_MAX_LEN];
+                    value_accuracy_to_buf(buf, sensor->get_state(), sensor->get_accuracy_decimals());
+                    data = buf;
                     if (data.find('.') != std::string::npos)
                         while (!data.empty())
                         {

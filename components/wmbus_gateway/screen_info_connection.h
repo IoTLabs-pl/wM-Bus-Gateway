@@ -69,11 +69,14 @@ namespace esphome
                     }
                 }
 
+                char mac[MAC_ADDRESS_BUFFER_SIZE];
+                get_mac_address_into_buffer(mac);
+
                 return {
                     {"AP", ssid},
                     {"IP", ip},
                     {"RSSI", rssi_ch},
-                    {"MAC", get_mac_address()},
+                    {"MAC", mac},
                 };
             }
         };
