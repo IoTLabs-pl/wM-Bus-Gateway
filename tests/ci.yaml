@@ -1,0 +1,35 @@
+# CI-only config: esphome -s hw_variant gen1 compile tests/ci.yaml
+#
+# The packages pull wmbus_gateway from the released tag in version.yaml, so
+# factory.yaml never compiles the component code of the current branch. This
+# config overrides it with the local copy and adds a meter sensor, which
+# enables USE_WMBUS_METER_SENSOR and with it the sensor screen.
+packages:
+  wmbus_gateway: !include ../packages/wmbus_gateway_${hw_variant | lower}.yaml
+
+external_components:
+  - source:
+      type: local
+      path: ../components
+    components:
+      - wmbus_gateway
+
+esphome:
+  name: wmbus-gateway-ci-${hw_variant | lower}
+
+wifi:
+  ssid: ci
+  password: ci-password
+
+api:
+
+wmbus_meter:
+  - id: ci_meter
+    meter_id: 12345678
+    type: apator162
+
+sensor:
+  - platform: wmbus_meter
+    parent_id: ci_meter
+    field: total_m3
+    name: Total

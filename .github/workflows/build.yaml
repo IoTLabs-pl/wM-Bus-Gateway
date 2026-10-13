@@ -25,6 +25,13 @@ jobs:
           substitutions: |
             hw_variant=${{ matrix.hw_variant }}
           complete-manifest: true
+      - name: Build local components with a meter sensor
+        uses: esphome/build-action@v8.1.0
+        with:
+          version: ${{ steps.build_firmware.outputs.version }}
+          yaml-file: tests/ci.yaml
+          substitutions: |
+            hw_variant=${{ matrix.hw_variant }}
       - name: Rename manifest file
         working-directory: ${{ steps.build_firmware.outputs.name }}
         run: |
