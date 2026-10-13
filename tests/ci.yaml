@@ -1,0 +1,23 @@
+packages:
+  wmbus_gateway: !include ../packages/wmbus_gateway_${hw_variant | lower}.yaml
+
+external_components:
+  - source:
+      type: local
+      path: ../components
+    components:
+      - wmbus_gateway
+
+wifi:
+  ssid: ci
+
+wmbus_meter:
+  - id: ci_meter
+    meter_id: 12345678
+    type: apator162
+
+sensor:
+  - platform: wmbus_meter
+    parent_id: ci_meter
+    field: total_m3
+    name: Total
