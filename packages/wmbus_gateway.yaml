@@ -3,7 +3,9 @@ substitutions:
 
 packages:
   hal: !include hal_${hw_variant | lower}.yaml
-  resources: !include resources.yaml
+  display: !include
+    file: display.yaml
+    condition: ${hw_variant in ['Gen1', 'Gen2']}
   version: !include version.yaml
 
 external_components:
@@ -15,15 +17,10 @@ external_components:
       - wmbus_common
       - wmbus_radio
       - wmbus_meter
-  - source: 
-      type: git
-      url: https://github.com/IoTLabs-pl/wM-Bus-Gateway
-      ref: ${wmbus_gateway_version}
-    components:
-      - wmbus_gateway
 
 esphome:
   name: wmbus-gateway
+  min_version: 2026.10.0
   friendly_name: wM-Bus Gateway ${hw_variant}
   comment: wM-Bus Gateway for ESPHome
   project:
@@ -43,13 +40,6 @@ wmbus_radio:
                   id: wmbus_gateway_status_led
                   state: !lambda return iteration % 2 == 0;
               - delay: 50ms
-
-wmbus_gateway:
-  resources:
-    font_large: font_large
-    font_small: font_small
-    qrcode: qrcode
-    logo: logo
 
 logger:
   level: debug
