@@ -1,5 +1,8 @@
 packages:
   wmbus_gateway: !include packages/wmbus_gateway_${hw_variant | lower}.yaml
+  network_priority: !include
+    file: packages/network_priority.yaml
+    condition: ${hw_variant | lower == 'eth'}
 
 esphome:
   name: wmbus-gateway-${hw_variant | lower}
