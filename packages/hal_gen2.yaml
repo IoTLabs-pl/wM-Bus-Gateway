@@ -55,3 +55,6 @@ wmbus_radio:
   tcxo_voltage: 1.8V
   use_dcdc: true
   rx_boost: true
+
+logger:
+  hardware_uart: UART0

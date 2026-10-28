@@ -14,6 +14,7 @@ jobs:
         hw_variant:
           - gen1
           - gen2
+          - eth
     steps:
       - name: Checkout code
         uses: actions/checkout@v7

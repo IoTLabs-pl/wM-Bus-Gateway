@@ -1,0 +1,54 @@
+esp32:
+  variant: esp32s3
+  flash_size: 16MB
+  cpu_frequency: 240MHz
+  framework:
+    type: esp-idf
+
+psram:
+  mode: octal
+
+spi:
+  id: spi_bus
+  clk_pin: GPIO7
+  mosi_pin: GPIO9
+  miso_pin: GPIO8
+
+ethernet:
+  type: W5500
+  spi_id: spi_bus
+  cs_pin:
+    number: GPIO2
+    allow_other_uses: true
+  interrupt_pin: GPIO10
+  clock_speed: 16MHz
+
+output:
+  - platform: gpio
+    id: rf_sw_output
+    pin: GPIO38
+    inverted: true
+  - platform: gpio
+    id: w5500_cs_output
+    pin:
+      number: GPIO2
+      allow_other_uses: true
+    inverted: true
+
+light:
+  - platform: status_led
+    id: wmbus_gateway_status_led
+    pin: GPIO1
+
+wmbus_radio:
+  id: wmbus_radio_component
+  spi_id: spi_bus
+  radio_type: SX1262
+  cs_pin: GPIO41
+  reset_pin: GPIO42
+  busy_pin: GPIO40
+  dio1_pin: GPIO39
+  tcxo_voltage: 1.8V
+  use_dcdc: true
+  rx_boost: true
+  rf_switch: true

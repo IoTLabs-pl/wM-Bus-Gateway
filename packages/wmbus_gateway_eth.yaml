@@ -1,0 +1,5 @@
+packages:
+  wmbus_gateway: !include
+    file: wmbus_gateway.yaml
+    vars:
+      hw_variant: ETH

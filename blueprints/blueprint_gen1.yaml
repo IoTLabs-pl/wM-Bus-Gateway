@@ -48,7 +48,6 @@ wmbus_meter:
     meter_id: 12345678
     type: apator162
     key: 00112233445566778899aabbccddeeff # Optional, if your meter is encrypted. May be specified as ASCII or HEX string.
-    # mode: C1 # or T1 if you want to filter specific modes. When not specified, all modes are accepted.
     # on_telegram:
     # Sending telegram to MQTT topic as JSON. MQTT component must be configured in your config.
     #   - then: 
