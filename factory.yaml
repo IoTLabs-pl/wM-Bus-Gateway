@@ -4,9 +4,6 @@ packages:
     file: packages/network_priority.yaml
     condition: ${hw_variant | lower == 'eth'}
 
-esphome:
-  name: wmbus-gateway-${hw_variant | lower}
-
 improv_serial:
 
 improv_ble:
