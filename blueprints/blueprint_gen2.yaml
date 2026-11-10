@@ -8,27 +8,21 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
 
-# If you want to connect with HA, you need to enable API.
-api:
-
-# If you want to use OTA updates, you need to enable OTA.
+# Updates over the network.
 ota:
   - platform: esphome
 
-# If you want to use MQTT, you need to enable MQTT.
+# For Home Assistant.
+api:
+
+# For an MQTT broker, instead of the API or along with it.
 # mqtt:
 #   broker: mqtt.example.com
 #   username: !secret mqtt_username
 #   password: !secret mqtt_password
 
 wmbus_radio:
-  # This part of config is responsible for listening to any wM-Bus frames.
-  # The same part of config is present in the factory firmware. 
-  # Using links appear in the logs, you will be redirected to the wM-Bus Meters Analyzer
-  # allowing you inspect the received frames, identify proper driver, 
-  # check your decryption key and identify available fields in datagrams.
-  # You may comment out this section if your meters are already configured
-  # and you don't want to see the frames in the logs.
+  # Logs every received frame with a link to decode it; remove this section for a quiet log.
   on_frame:
     - then:
         - logger.log:
@@ -37,8 +31,8 @@ wmbus_radio:
             args: ["frame->meter_id().c_str()"]
         - logger.log:
             level: WARN
-            format: "Frame: https://wmbusmeters.org/analyze/%s"
-            args: ["frame->as_hex().c_str()"]
+            format: "Frame: https://iotlabs.pl/decoder?telegram=%s&rssi=%d"
+            args: ["frame->as_hex().c_str()", "frame->rssi()"]
 
 wmbus_meter:
   # This part of config is responsible for handling the received frames
