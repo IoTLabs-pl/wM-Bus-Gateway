@@ -70,10 +70,10 @@ This repository contains the source code for the **wM-Bus Gateway**, a device th
 
    ```
    [16:29:10][W][main:057]: Meter ID: 12345678...
-   [16:29:10][W][main:060]: Frame: https://wmbusmeters.org/analyze/be44ed1...
+   [16:29:10][W][main:060]: Frame: https://iotlabs.pl/decoder?telegram=be44ed1...
    ```
 
-7. Click or copy and paste the link from the logs to your browser to analyze the received datagram. At [wmbusmeters.org](https://wmbusmeters.org/analyze/) you will be able to check your decryption key (if your meter is encrypted) and see all data fields available to decode from the datagram.
+7. Click or copy and paste the link from the logs to your browser to analyze the received datagram. In the [IoTLabs decoder](https://iotlabs.pl/decoder) you will be able to check your decryption key (if your meter is encrypted) and see all data fields available to decode from the datagram.
 
 8. When you identify your meter ID, decryption key, and fields you are interested in, you can edit the device configuration in the ESPHome Dashboard.
 

@@ -37,8 +37,8 @@ wmbus_radio:
             args: ["frame->meter_id().c_str()"]
         - logger.log:
             level: WARN
-            format: "Frame: https://wmbusmeters.org/analyze/%s"
-            args: ["frame->as_hex().c_str()"]
+            format: "Frame: https://iotlabs.pl/decoder?telegram=%s&rssi=%d"
+            args: ["frame->as_hex().c_str()", "frame->rssi()"]
 
 button:
   - platform: restart
