@@ -17,82 +17,88 @@ This repository contains the source code for the **wM-Bus Gateway**, a device th
 
 ## ℹ️ General Info
 
-> ⚠️ **Warning:**  
-> **Do not power on the device without the antenna connected** – this may damage the radio module.
-
-- 🟦 The device has two buttons:
-  - **Top button** – used to switch pages on the display.
-  - **Bottom button** – used to reset the device.
-- 📶 Reception of the wM-Bus datagram is signaled by a fast blinking of the built-in LED.
+- 🟦 The gateway has two buttons:
+  - **Top button** – switches pages on the display.
+  - **Bottom button** – resets the device.
+- 📶 The built-in LED blinks fast when the gateway receives a wM-Bus frame.
 
 ---
 
-## 🏠 Recommended Integration Workflow for Home Assistant
+## 🏠 Getting Started with Home Assistant
 
-### 🛠️ Prerequisites
+> [!NOTE]
+> This is the path we recommend if you are new to ESPHome. The gateway runs plain ESPHome, so any other way works too: for example, adopt it in ESPHome Device Builder and start from one of the [`blueprints`](blueprints).
 
-- [ESPHome Dashboard](https://esphome.io/guides/getting_started_hassio.html) (can be used as a Home Assistant Add-on or [Python package](https://esphome.io/guides/getting_started_command_line))
+You need:
 
----
+- a computer with **Google Chrome** or **Microsoft Edge** and a USB cable for the gateway,
+- **ESPHome Device Builder**. We recommend its [desktop app](https://esphome.io/install/) for Windows, macOS or Linux: it builds firmware on your computer, which is usually more powerful than the Home Assistant machine, and does not load Home Assistant.
 
-### 🚦 Steps
+### 1. Find your meters
 
-1. **Power up** the device with a USB cable. You may use your computer or a USB power adapter.
-2. **Connect the device to your Wi-Fi network** using one of the following methods:
-   - **🌐 via device's Wi-Fi access point:**
-     1. Connect to device's access point (SSID: `IoTLabs wM-Bus Gateway`, no password)
-     2. Open [`http://192.168.4.1`](http://192.168.4.1) in your web browser
-     3. Enter your Wi-Fi credentials and click **Save**.
-   - **🔵 via Improv BLE:**
-     1. Open [Web Tools](https://iotlabs.pl/en/tools) with a device and browser supporting Bluetooth Low Energy (BLE), e.g. a mobile phone with Google Chrome or Edge.
-     2. Click **Connect** in the `Improv via BLE` section.
-     3. Select your device from the list.
-     4. Follow the instructions to connect the device to your Wi-Fi network.
-   - **🟠 via Improv Serial:**
-     1. Connect the device to your computer using a USB cable.
-     2. Open [Web Tools](https://iotlabs.pl/en/tools) with your computer and a browser supporting Web Serial API (e.g. Google Chrome or Edge).
-     3. Click **Connect** in the `Improv via Serial` section.
-     4. Select your device from the list.
-     5. Follow the instructions to connect the device to your Wi-Fi network.
-3. When your device switches to the selected network (the currently connected network name is shown on a dedicated display page), go to the **ESPHome Dashboard** where you should see a newly discovered device and click the **Take Control** button.
-4. In the following popup window, type the desired device name and click **Take Control**.
-5. In the next two popup windows, click **Skip** and **Close**.
+Connect the antenna, then plug the gateway into your computer. Open the **wM-Bus Decoder** at [iotlabs.pl/tools](https://iotlabs.pl/en/tools#decoder) and click **Connect the Gateway**.
 
-   > 💡 **Tip:**  
-   > You may also install new firmware at this point, but ESPHome will build factory firmware which is already installed on the device.
+![The decoder before connecting](docs/decoder-connect.webp)
 
-6. Click the **Logs** button for the already added device in the ESPHome Dashboard and choose the appropriate connection method (wireless if not connected via USB, or wired if you are).
+Choose the gateway's port (a *USB to UART* bridge) and click **Connect**. If the list has no such port, install the [driver of the gateway's USB chip](https://esphome.io/guides/physical_device_connection/#connecting-to-the-esp).
 
-   > 🖱️ **Tip:**  
-   > For testing, you may click the top button on the device to switch display pages and see logs about these events.
+![Choosing the gateway's port](docs/decoder-port.webp)
 
-   Wait some time to receive a wM-Bus datagram and see it in the logs. You will get logs like this:
+The gateway restarts, the decoder recognises its model and lists every meter it hears on the **Analysis** tab. Meters send their readings every few seconds to a few minutes, so give it a while. Find yours by the number printed on the meter, or by matching its consumption. A red padlock means the meter is encrypted.
 
-   ```
-   [16:29:10][W][main:057]: Meter ID: 12345678...
-   [16:29:10][W][main:060]: Frame: https://iotlabs.pl/decoder?telegram=be44ed1...
-   ```
+![Meters heard by the gateway](docs/decoder-meters.webp)
 
-7. Click or copy and paste the link from the logs to your browser to analyze the received datagram. In the [IoTLabs decoder](https://iotlabs.pl/decoder) you will be able to check your decryption key (if your meter is encrypted) and see all data fields available to decode from the datagram.
+### 2. Choose the readings
 
-8. When you identify your meter ID, decryption key, and fields you are interested in, you can edit the device configuration in the ESPHome Dashboard.
+Click your meter. The decoder picks its driver. If the meter is encrypted, enter its key; your utility company or the meter's installer has it. Then tick the readings you want:
 
-   - In the section `wmbus_meter` set:
+- the first column sends a reading to Home Assistant,
+- the second column shows it on the gateway's display.
 
-     - `meter_id` to your meter ID
-     - `type` to the driver name in wmbusmeters
-     - optionally `decryption_key`
-     - `id` as a label for referencing in other YAML sections
+Click the meter's name or a reading's name to change it. Do the same for every meter you want.
 
-   - In the `sensor` section, create a sensor for each field you want to decode. Each sensor needs:
-     - `parent_id` to link to the specific meter
-     - `field` to specify which decoded field to use
-     - Other parameters are specific to ESPHome; see the [ESPHome documentation](https://esphome.io/components/sensor/index.html) for details.
+![A configured meter](docs/decoder-meter.webp)
 
-9. When you finish editing the configuration, click the **Install** button in the ESPHome Dashboard and choose your preferred installation method (wireless or USB).
+### 3. Copy the configuration
 
-10. After installation, go to your Home Assistant instance and add the device with ESPHome integration.  
-    Typically, it will be automatically discovered, but you can also add it manually on the Integrations page by entering the device IP address.
+Click **Next**. The decoder writes the gateway's whole ESPHome configuration with your meters in it. Click **Copy**.
+
+![The configuration written by the decoder](docs/decoder-yaml.webp)
+
+The decoder remembers your meters in this browser, so you can come back later and add more.
+
+> [!IMPORTANT]
+> Now release the gateway: go back to the first tab and click **Disconnect**, or close or refresh the page. ESPHome Device Builder can use the gateway's port only once the decoder lets go of it.
+
+### 4. Create the gateway's configuration
+
+Open ESPHome Device Builder, click **Create device**, open **Advanced set up options**, choose **Empty Configuration**, name the device and click **Finish setup**.
+
+![Creating an empty configuration](docs/builder-create.webp)
+
+In the YAML editor, select everything, paste the configuration you copied and click **Save**. If the Device Builder reports `Secret 'wifi_ssid' not defined`, enter your Wi-Fi name and password in **⋮ → Set up Wi-Fi**.
+
+![The pasted configuration](docs/builder-editor.webp)
+
+### 5. Install over USB
+
+Click **Install**, choose **Plug into this computer**, then choose the gateway's port as in step 1. The Device Builder compiles the firmware and flashes it. The first build takes several minutes.
+
+![Choosing how to install](docs/builder-install.webp)
+
+![The firmware compiled and flashed](docs/builder-done.webp)
+
+You can install later changes wirelessly (**On the network**), without the cable.
+
+### 6. Add the gateway to Home Assistant
+
+The gateway joins your network and Home Assistant discovers it. Go to **Settings → Devices & services**, click **Add** next to it and confirm with **Submit**.
+
+![The gateway discovered by Home Assistant](docs/ha-discovered.webp)
+
+Each meter becomes a device with the readings you ticked.
+
+![A meter in Home Assistant](docs/ha-device.webp)
 
 ---
 
@@ -100,9 +106,70 @@ This repository contains the source code for the **wM-Bus Gateway**, a device th
 
 <details>
 <summary>
-<h3 style="display:inline-block">Where I can find example ESPHome <code>yaml</code> configuration?</h3>
+<h3 style="display:inline-block">How do I add more meters?</h3>
 </summary>
-You can find the example in the `blueprint.yaml` file in the root directory of this repository. This file is also automatically imported into your ESPHome Dashboard when you add the device for the first time.
+
+The gateway logs every frame it receives with a link to the decoder. To see the logs, click the **Logs** icon on the gateway's card in ESPHome Device Builder and choose **On the network**.
+
+![The gateway's logs](docs/builder-logs.webp)
+
+Open the link of the new meter's frame in the browser, or connect the gateway to the decoder over USB again as in step 1. Set up the meter in the decoder, copy the configuration, paste it over the old one as in step 4 and install it **On the network**.
+
+If you changed the configuration by hand, the decoder does not know about it: copy only the new meter's sections instead.
+</details>
+
+<details>
+<summary>
+<h3 style="display:inline-block">How do I add sensors of the gateway itself, such as its Wi-Fi signal?</h3>
+</summary>
+
+The configuration from the decoder holds only the meters. Add ESPHome's own components to it, appending entries to the lists that are already there instead of adding a second `sensor:`:
+
+```yaml
+sensor:
+  - platform: wifi_signal
+    name: Wi-Fi signal
+  - platform: uptime
+    name: Uptime
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: IP address
+
+button:
+  - platform: restart
+    name: Restart
+```
+
+Any other [ESPHome component](https://esphome.io/components/) goes in the same way.
+</details>
+
+<details>
+<summary>
+<h3 style="display:inline-block">How do I use the gateway as a Bluetooth proxy?</h3>
+</summary>
+
+Add these sections to the configuration and install it:
+
+```yaml
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+
+bluetooth_proxy:
+  active: true
+```
+
+Home Assistant then reaches Bluetooth devices near the gateway through it. See [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy/) for the details.
+</details>
+
+<details>
+<summary>
+<h3 style="display:inline-block">Where can I find an example ESPHome <code>yaml</code> configuration?</h3>
+</summary>
+
+The [`blueprints`](blueprints) directory has one for each variant. The decoder builds its configuration on them.
 </details>
 
 <details>
@@ -187,10 +254,7 @@ For more complex LED patterns, you may use the [`script` component](https://esph
 
 ### 🏭 Factory Reset
 
-You may use `wmbus-gateway-esp32.factory.bin` available in the **Releases** to flash the device with factory firmware.
-
-A simple web flasher based on [ESP Web Tools](https://esphome.github.io/esp-web-tools/) is available at:  
-👉 [https://iotlabs.pl/en/tools](https://iotlabs.pl/en/tools)
+The **Flasher** at [iotlabs.pl/tools](https://iotlabs.pl/en/tools) installs the factory firmware. The same firmware is in the **Releases** as `wmbus-gateway-<variant>-<chip>.factory.bin`.
 
 ---
 
