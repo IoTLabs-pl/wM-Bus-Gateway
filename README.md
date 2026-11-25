@@ -193,61 +193,49 @@ This will adjust the value and display the correct unit.
 <h3 style="display:inline-block">How to change built-in LED settings?</h3>
 </summary>
 
-By default, the built-in LED blinks (10 blinks for one second) when a wM-Bus datagram is received.
+By default, the built-in LED blinks 10 times in one second when the gateway receives a wM-Bus frame. This blink is the `on_frame` automation with the id `frame_led_blink`.
 
-You can change this behavior by overriding the `on_frame` automation in the `wmbus_radio` section of the ESPHome configuration. For example, to disable it completely you may use following cofiguration:
-
-```yaml
-wmbus_radio:
-  on_frame: !remove
-```
-
-If you want to change the LED blinking pattern, you can use the following example:
+To turn it off, remove it by this id. Add it to the `on_frame` list already in your configuration; your own automations there, such as the frame log, stay:
 
 ```yaml
 wmbus_radio:
   on_frame:
-    then:
-      - repeat:
-          count: 2
-          then:
-            - light.turn_on: wmbus_gateway_status_led
-            - delay: 500ms
-            - light.turn_off: wmbus_gateway_status_led
-            - delay: 500ms
+    - id: !remove frame_led_blink
 ```
 
-It will blink the LED twice with a 500ms interval.
-
-You may also blink LED for specific meter datagrams. For example, to blink the LED only for a specific meter ID:
+To blink in another pattern, remove it and add your own, for example two blinks of 500 ms:
 
 ```yaml
 wmbus_radio:
-  on_frame: !remove
+  on_frame:
+    - id: !remove frame_led_blink
+    - then:
+        - repeat:
+            count: 2
+            then:
+              - light.turn_on: wmbus_gateway_status_led
+              - delay: 500ms
+              - light.turn_off: wmbus_gateway_status_led
+              - delay: 500ms
+```
+
+To blink only for your meters, remove it and blink in each meter's `on_telegram`:
+
+```yaml
+wmbus_radio:
+  on_frame:
+    - id: !remove frame_led_blink
 
 wmbus_meter:
   - id: my_meter
     ...
     on_telegram:
-      then:
-        - turn_on: wmbus_gateway_status_led
-        - delay: 100ms
-        - turn_off: wmbus_gateway_status_led
-  - id: another_meter
-    ...
-    on_telegram:
-      then:
-        - repeat:
-            count: 5
-            then:
-              - turn_on: wmbus_gateway_status_led
-              - delay: 100ms
-              - turn_off: wmbus_gateway_status_led
-              - delay: 300ms
+      - light.turn_on: wmbus_gateway_status_led
+      - delay: 100ms
+      - light.turn_off: wmbus_gateway_status_led
 ```
 
-In this example, the LED will blink once for `my_meter` and five times for `another_meter`.
-For more complex LED patterns, you may use the [`script` component](https://esphome.io/components/script.html) in ESPHome. It allows you to define parameters (number of blinks, delay, etc.) and create reusable fragments of code for different events as demonstrated in ESPHome documentation.
+For patterns you reuse, see the [`script` component](https://esphome.io/components/script/).
 </details>
 
 ---
