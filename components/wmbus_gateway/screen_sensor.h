@@ -23,7 +23,8 @@ namespace esphome
         protected:
             void render_fcn(display::Display &it) override
             {
-                this->render_string(it, 0, 0, display::TextAlign::TOP_LEFT, resources::font_small, this->sensor->get_name().c_str());
+                char name_buf[ENTITY_NAME_BUF_SIZE];
+                this->render_string(it, 0, 0, display::TextAlign::TOP_LEFT, resources::font_small, this->sensor->get_name_to(name_buf).c_str());
                 this->render_value(it);
                 this->render_time_ago(it);
             }

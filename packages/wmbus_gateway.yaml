@@ -20,7 +20,7 @@ external_components:
 
 esphome:
   name: wmbus-gateway-${hw_variant | lower}
-  min_version: 2026.10.0
+  min_version: 2026.11.0
   friendly_name: wM-Bus Gateway ${hw_variant}
   comment: wM-Bus Gateway for ESPHome
   project:
