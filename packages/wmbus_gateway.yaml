@@ -32,7 +32,8 @@ esphome:
 wmbus_radio:
   id: wmbus_radio_component
   on_frame:
-    - then:
+    - id: frame_led_blink
+      then:
         - repeat:
             count: 20
             then:
